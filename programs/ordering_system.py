@@ -1,59 +1,28 @@
 menu = {
-    1: {"name": 'espresso',
-        "price": 1.99},
-    2: {"name": 'coffee', 
-        "price": 2.50},
-    3: {"name": 'cake', 
-        "price": 2.79},
-    4: {"name": 'soup', 
-        "price": 4.50},
-    5: {"name": 'sandwich',
-        "price": 4.99}
+    1: {"name": 'espresso', "price": 1.99},
+    2: {"name": 'coffee', "price": 2.50},
+    3: {"name": 'cake', "price": 2.79},
+    4: {"name": 'soup', "price": 4.50},
+    5: {"name": 'sandwich', "price": 4.99}
 }
 
 def calculate_subtotal(order):
     print('Calculating bill subtotal...')
-
-    sum = 0
-    for d in order:
-        for key, value in d.items():
-            if key == "price":
-                sum += value
-
-    return sum
-    
-    raise NotImplementedError()
+    subtotal = sum(item["price"] for item in order)
+    return round(subtotal, 2)
 
 def calculate_tax(subtotal):
     print('Calculating tax from subtotal...')
-
-    tax = round((subtotal * 15 / 100), 2)
+    tax = round(subtotal * 0.15, 2)
     return tax
 
-    raise NotImplementedError()
-
 def summarize_order(order, subtotal, tax):
-
-    names = []
-    for d in order:
-        for key, value in d.items():
-            if key == "name":
-                names.append(value)
-
-
     total = round(subtotal + tax, 2)
-
-    print("\nOrder Summary : ")
-    print(names, total)
-
+    names = [item["name"] for item in order]
     return names, total
-    
-
-    raise NotImplementedError()
 
 def print_order(order):
     print('You have ordered ' + str(len(order)) + ' items')
-    items = []
     items = [item["name"] for item in order]
     print(items)
     return order
@@ -85,7 +54,8 @@ def main():
     print("Tax for the order is: " + str(tax))
 
     items, total = summarize_order(order, subtotal, tax)
-
+    print("Order summary: items -", items, ", total -", total)
 
 if __name__ == "__main__":
     main()
+
